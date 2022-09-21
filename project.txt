@@ -1,0 +1,27 @@
+developer team and profiler
+
+- landing page
+- login/sign up with github && google
+- category selection
+- profile creation
+- search for profiles and developer
+- team creation
+- event creation
+- count down
+- registration for event
+- looking for teammates
+- chat && fileupload (constrained) using firebase (optional)
+
+
+
+tech stack
+
+
+Nextjs with typescript
+tailwindcss
+primsa for database
+firebase
+next auth
+
+
+Project name team it up!!!

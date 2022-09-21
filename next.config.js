@@ -2,6 +2,11 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-}
 
-module.exports = nextConfig
+  //allow images
+  images: {
+    domains: ["avatars.githubusercontent.com"],
+  },
+};
+
+module.exports = nextConfig;
