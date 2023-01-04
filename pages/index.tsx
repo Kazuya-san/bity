@@ -10,7 +10,7 @@ import Link from "next/link";
 const styles = {
   centerScreen: "flex justify-center items-center h-screen",
   logoutBtn:
-    "bg-orange-600 hover:bg-orange-700 text-center text-white font-bold text-sm px-2 sm:w-1/2 py-[0.8rem] rounded-full transition mt-3",
+    "bg-orange-600 hover:bg-orange-700 text-center text-white font-bold text-sm px-4 sm:w-1/2 py-[0.8rem] rounded-full transition mt-3",
   center: "flex justify-center items-center",
 };
 
