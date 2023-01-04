@@ -17,10 +17,10 @@ function MyApp({ Component, pageProps }: AppProps<{ session: Session }>) {
       <Navbar />
       {authRoutes.includes(router.pathname) ? (
         <ProtectedRoutes>
-          <Component {...pageProps} />
+          <Component {...pageProps} key={router.asPath} />
         </ProtectedRoutes>
       ) : (
-        <Component {...pageProps} />
+        <Component {...pageProps} key={router.asPath} />
       )}
       <Footer />
     </SessionProvider>
