@@ -25,7 +25,7 @@ const Navbar: NextPage = () => {
     rightSide =
       status === "authenticated" ? (
         <div className="flex items-center justify-center">
-          <Link href="/dashboard" shallow={true}>
+          <Link href="/dashboard">
             <a className="md:text-base text-sm font-semibold ml-2">
               <div className="flex flex-col md:flex-row items-center justify-center">
                 <Image
