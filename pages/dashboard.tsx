@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useSession } from "next-auth/react";
 import { unstable_getServerSession } from "next-auth";
-import { NextPage } from "next";
 import Link from "next/link";
 import prisma from "../lib/prisma";
 import { options } from "./api/auth/[...nextauth]";
 import { useRouter } from "next/router";
 import ReactPaginate from "react-paginate";
 
-const DeleteButton = ({ id }) => {
+const DeleteButton = ({ id }: { id: string }) => {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
@@ -38,7 +36,15 @@ const DeleteButton = ({ id }) => {
   );
 };
 
-const Dashboard: NextPage = ({ url, pages, count }) => {
+const Dashboard = ({
+  url,
+  pages,
+  count,
+}: {
+  url: any;
+  pages: any;
+  count: any;
+}) => {
   // const { data, status } = useSession();
 
   const [loading, setLoading] = useState(false);
@@ -100,7 +106,7 @@ const Dashboard: NextPage = ({ url, pages, count }) => {
               </tr>
             </thead>
             <tbody className="divide-y text-white divide-gray-800">
-              {urls.map((url) => (
+              {urls.map((url: any) => (
                 <tr key={url.id}>
                   <td className="px-6 py-4 text-sm text-blue-100 hover:text-blue-200 cursor-pointer font-medium whitespace-nowrap">
                     <Link href={url.url}>
@@ -178,7 +184,7 @@ const Dashboard: NextPage = ({ url, pages, count }) => {
   );
 };
 
-export const getServerSideProps = async (context) => {
+export const getServerSideProps = async (context: any) => {
   const session = await unstable_getServerSession(
     context.req,
     context.res,
