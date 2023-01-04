@@ -131,7 +131,7 @@ const Shortener: NextPage = () => {
       </form>
 
       {status === "success" && (
-        <div className="flex justify-center items-center w-full min-h-[85.vh]">
+        <div className="flex justify-center items-center w-full">
           <h1>{shortUrl}</h1>
           <input
             type="button"
