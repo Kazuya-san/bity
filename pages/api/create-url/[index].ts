@@ -52,25 +52,37 @@ const url = async (req: NextApiRequest, res: NextApiResponse) => {
     return;
   }
 
-  console.log(session);
-
-  const newUrl = await prisma.url.create({
-    data: {
-      slug: slug,
-      url: url,
-      user: {
-        connect: {
-          id: session?.user?.id ?? "",
+  if (session) {
+    const newUrl = await prisma.url.create({
+      data: {
+        slug: slug,
+        url: url,
+        user: {
+          connect: {
+            id: session?.user?.id ?? "",
+          },
         },
+        //   userId: session?.user?.id ?? "",
       },
-      //   userId: session?.user?.id ?? "",
-    },
-  });
+    });
 
-  return res.json({
-    message: "success",
-    data: newUrl,
-  });
+    return res.json({
+      message: "success",
+      data: newUrl,
+    });
+  } else {
+    const newUrl = await prisma.url.create({
+      data: {
+        slug: slug,
+        url: url,
+      },
+    });
+
+    return res.json({
+      message: "success",
+      data: newUrl,
+    });
+  }
 };
 
 export default url;
