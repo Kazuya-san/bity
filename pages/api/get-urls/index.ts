@@ -3,7 +3,7 @@ import prisma from "../../../lib/prisma";
 import { getSession } from "next-auth/react";
 
 const url = async (req: NextApiRequest, res: NextApiResponse) => {
-  const page = req.query["page"];
+  const page = req.query["page"] as string;
   const limit = 10;
 
   const session = await getSession({ req });
@@ -13,7 +13,7 @@ const url = async (req: NextApiRequest, res: NextApiResponse) => {
       userId: session?.user?.id,
     },
     // take: limit,
-    skip: parseInt(page - 1) * limit,
+    skip: (parseInt(page) - 1) * limit,
     take: limit,
   });
 
