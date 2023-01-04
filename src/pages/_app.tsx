@@ -4,14 +4,17 @@ import { Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import ProtectedRoutes from "../components/ProtectedRoutes";
 import { NextRouter, useRouter } from "next/router";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 function MyApp({ Component, pageProps }: AppProps<{ session: Session }>) {
   const router: NextRouter = useRouter();
 
-  const authRoutes = ["/dashboard"];
+  const authRoutes = ["/dashboard", "/create-profile"];
 
   return (
     <SessionProvider session={pageProps.session}>
+      <Navbar />
       {authRoutes.includes(router.pathname) ? (
         <ProtectedRoutes>
           <Component {...pageProps} />
@@ -19,6 +22,7 @@ function MyApp({ Component, pageProps }: AppProps<{ session: Session }>) {
       ) : (
         <Component {...pageProps} />
       )}
+      <Footer />
     </SessionProvider>
   );
 }

@@ -45,7 +45,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
-  Profile       Profile[]
+  Url           Url[]
 }
 
 model VerificationToken {
@@ -56,15 +56,11 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-model Profile {
-  id              String   @id @default(auto()) @map("_id") @db.ObjectId
-  userId          String
-  name            String
-  email           String?  @unique
-  image           String?
-  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  likedCategories String[]
-  githubProfile   String?
-  youtubeProfile  String?
-  skills          String[]
+model Url {
+  id     String  @id @default(auto()) @map("_id") @db.ObjectId
+  slug   String  @unique
+  url    String
+  clicks Int     @default(0)
+  user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String?
 }
