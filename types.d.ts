@@ -4,6 +4,9 @@ declare module "next-auth" {
   interface Session {
     user?: DefaultUser & {
       id: string;
+      isAdmin: boolean;
     };
   }
 }
+
+declare module "uuid";

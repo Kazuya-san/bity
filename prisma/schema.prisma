@@ -46,6 +46,14 @@ model User {
   accounts      Account[]
   sessions      Session[]
   Url           Url[]
+  isAdmin       Boolean   @default(false)
+}
+
+model ApiKey {
+  id    String  @id @default(auto()) @map("_id") @db.ObjectId
+  key   String  @unique
+  name  String
+  valid Boolean @default(true)
 }
 
 model VerificationToken {
@@ -57,10 +65,12 @@ model VerificationToken {
 }
 
 model Url {
-  id     String  @id @default(auto()) @map("_id") @db.ObjectId
-  slug   String  @unique
-  url    String
-  clicks Int     @default(0)
-  user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId String?
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  slug     String  @unique
+  url      String
+  clicks   Int     @default(0)
+  user     User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId   String?
+  userName String?
+  fullUrl  String?
 }

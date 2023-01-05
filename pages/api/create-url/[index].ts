@@ -5,13 +5,36 @@ import { getSession } from "next-auth/react";
 const url = async (req: NextApiRequest, res: NextApiResponse) => {
   //make the body json
 
+  const key = req.headers["x-api-key"];
+  const session = await getSession({ req });
+
+  const apiKey = await prisma.apiKey.findFirst({
+    where: {
+      key: key as string,
+    },
+  });
+
+  if (!apiKey && !session?.user?.isAdmin) {
+    res.statusCode = 404;
+    res.json({ code: 404, message: "invalid api key or none found" });
+
+    return;
+  }
+
+  if (!apiKey?.valid && !session?.user?.isAdmin) {
+    res.statusCode = 404;
+    res.json({ code: 404, message: "api key is not valid" });
+
+    return;
+  }
+
   if (req.method !== "POST" && req.method !== "DELETE") {
     //find all urls and populate the table
 
-    const data = await prisma.url.findMany();
-    res.statusCode = 200;
+    // const data = await prisma.url.findMany();
+    // res.statusCode = 200;
 
-    res.json({ message: "success", data: data });
+    // res.json({ message: "success", data: data });
 
     // res.status(405).send({ message: "Only POST requests allowed" });
     return;
@@ -20,20 +43,43 @@ const url = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "DELETE") {
     const { index } = req.query;
 
+    const findData = await prisma.url.findFirst({
+      where: {
+        id: index as string,
+        userName: apiKey?.name,
+      },
+    });
+
+    // console.log(findData);
+
+    if (!findData || (!!session && !!session?.user?.isAdmin)) {
+      res.statusCode = 404;
+      return res.json({ code: 404, message: "not authorized or not found" });
+    }
+
     const data = await prisma.url.delete({
       where: {
         id: index as string,
       },
     });
 
-    return res.json({
-      message: "success",
-      data: data,
-    });
+    if (data) {
+      return res.json({
+        code: 200,
+        message: "success",
+        data: data,
+      });
+    } else {
+      res.statusCode = 404;
+      res.json({ code: 404, message: "invalid api key or none found" });
+
+      return;
+    }
   }
 
+  //get api key from the header
+
   const { slug, url } = req.body;
-  const session = await getSession({ req });
 
   const data = await prisma.url.findFirst({
     where: {
@@ -52,11 +98,12 @@ const url = async (req: NextApiRequest, res: NextApiResponse) => {
     return;
   }
 
-  if (session) {
+  if (session?.user?.isAdmin) {
     const newUrl = await prisma.url.create({
       data: {
         slug: slug,
         url: url,
+        fullUrl: process.env.CLIENT_URL + slug,
         user: {
           connect: {
             id: session?.user?.id ?? "",
@@ -75,6 +122,8 @@ const url = async (req: NextApiRequest, res: NextApiResponse) => {
       data: {
         slug: slug,
         url: url,
+        fullUrl: process.env.CLIENT_URL + slug,
+        userName: apiKey?.name,
       },
     });
 
