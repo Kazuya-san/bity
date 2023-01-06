@@ -26,6 +26,7 @@ export const options: NextAuthOptions = {
     session: async ({ session, user }: { session: any; user: any }) => {
       if (session?.user) {
         session.user.id = user.id ?? "";
+        session.user.isAdmin = user.isAdmin ?? false;
       }
       return session;
     },
