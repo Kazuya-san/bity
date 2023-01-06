@@ -8,8 +8,10 @@ const url = async (req: NextApiRequest, res: NextApiResponse) => {
 
   const key = req.headers["x-api-key"];
 
-  if (!key) return res.status(401).json({ message: "No API key provided" });
   const session = await getSession({ req });
+
+  if (!key && !session?.user?.isAdmin)
+    return res.status(401).json({ message: "No API key provided" });
 
   const apiKey = await prisma.apiKey.findFirst({
     where: {
