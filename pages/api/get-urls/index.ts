@@ -7,6 +7,8 @@ const url = async (req: NextApiRequest, res: NextApiResponse) => {
   const limit = 10;
 
   const key = req.headers["x-api-key"];
+
+  if (!key) return res.status(401).json({ message: "No API key provided" });
   const session = await getSession({ req });
 
   const apiKey = await prisma.apiKey.findFirst({
@@ -14,6 +16,16 @@ const url = async (req: NextApiRequest, res: NextApiResponse) => {
       key: key as string,
     },
   });
+
+  if (!apiKey && !session?.user?.isAdmin) {
+    res.statusCode = 404;
+    return res.json({ code: 404, message: "invalid api key or none found" });
+  }
+
+  if (!apiKey?.valid && !session?.user?.isAdmin) {
+    res.statusCode = 404;
+    return res.json({ code: 404, message: "api key is not valid" });
+  }
 
   if (session && session?.user?.isAdmin) {
     const data = await prisma.url.findMany({
