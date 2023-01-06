@@ -49,6 +49,7 @@ const Keys = () => {
     fetch("/api/create-api-key/key?page=" + page)
       .then((res) => res.json())
       .then((data) => {
+        if (data.code === 404) return alert("No keys found");
         setKeys(data.data);
         setPages(data.pages);
       });
