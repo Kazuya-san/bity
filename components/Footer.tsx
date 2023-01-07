@@ -16,7 +16,7 @@ const Footer: NextPage = () => {
         fontFamily: "Montserrat",
       }}
     >
-      Copyright &copy; {new Date().getFullYear()} GetmyTeam
+      Copyright &copy; {new Date().getFullYear()} Bitty Url Shortener
     </div>
   );
 };
