@@ -8,6 +8,14 @@ const url = async (req: NextApiRequest, res: NextApiResponse) => {
   const key = req.headers["x-api-key"];
   const session = await getSession({ req });
 
+  if (!session?.user?.isAdmin && !key) {
+    res.statusCode = 404;
+    return res.json({
+      code: 404,
+      message: "invalid api key or none found and user not an admin",
+    });
+  }
+
   const apiKey = await prisma.apiKey.findFirst({
     where: {
       key: key as string,
