@@ -10,8 +10,15 @@ const url = async (req: NextApiRequest, res: NextApiResponse) => {
 
   const session = await getSession({ req });
 
-  if (!key && !session?.user?.isAdmin)
-    return res.status(401).json({ message: "No API key provided" });
+  //if there is no api key and the user is not an admin
+
+  if (!session?.user?.isAdmin && !key) {
+    res.statusCode = 404;
+    return res.json({
+      code: 404,
+      message: "invalid api key or none found and user not an admin",
+    });
+  }
 
   const apiKey = await prisma.apiKey.findFirst({
     where: {
@@ -59,7 +66,11 @@ const url = async (req: NextApiRequest, res: NextApiResponse) => {
       take: limit,
     });
 
-    const count = await prisma.url.count();
+    const count = await prisma.url.count({
+      where: {
+        userName: apiKey?.name,
+      },
+    });
 
     res.setHeader("Content-Type", "application/json");
     res.setHeader("Access-Control-Allow-Origin", "*");
