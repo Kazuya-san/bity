@@ -93,7 +93,7 @@ const Dashboard = () =>
       fetchdata(1);
     }, []);
 
-    const onChange = (e) => {
+    const onChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
       setLoading(true);
       setFilterVal(e.target.value);
       fetch(`/api/get-urls?page=${1}`, {
@@ -155,7 +155,7 @@ const Dashboard = () =>
               className="bg-[#37517E] hover:bg-slate-700 text-white font-bold py-2 px-4 rounded"
             >
               <option value="all">All</option>
-              {nameOptions.map((name) => {
+              {nameOptions.map((name: { name: string }) => {
                 return (
                   <option key={name.name} value={name.name}>
                     {name.name}
