@@ -42,7 +42,7 @@ const url = async (req: NextApiRequest, res: NextApiResponse) => {
     if (specific && specific !== "all") {
       const data = await prisma.url.findMany({
         where: {
-          userName: specific,
+          userName: specific as string,
         },
         skip: (parseInt(page) - 1) * limit,
         take: limit,
