@@ -62,9 +62,11 @@ const Keys = () => {
       style={{
         fontFamily: "Montserrat",
       }}
-      className="flex items-center justify-center text-white flex-col w-full min-h-[85.6vh] bg-slate-900"
+      className="flex items-center justify-center text-white flex-col w-full min-h-[85.6vh] bg-white"
     >
-      <h1 className="text-4xl mb-8 uppercase font-bold mt-8">Created Keys</h1>
+      <h1 className="text-4xl text-[#37517E] mb-8 uppercase font-bold mt-8">
+        Created Keys
+      </h1>
 
       <div className="flex items-center justify-center w-full mb-5">
         <form
@@ -97,13 +99,13 @@ const Keys = () => {
             <input
               type="text"
               placeholder="Enter Name for the key"
-              className="w-9/12 px-4 text-black py-2 rounded-lg shadow-2xl border border-gray-800 outline-none"
+              className="w-9/12 px-4 text-black py-2 rounded-lg shadow-2xl border border-[#37517E] outline-none"
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
             <button
               type="submit"
-              className="bg-orange-500 flex items-center justify-center hover:bg-orange-600 text-white font-bold py-2 px-4 rounded ml-4"
+              className="bg-[#37517E] flex items-center justify-center hover:bg-[#2a4066] text-white font-bold py-2 px-4 rounded ml-4"
             >
               Create
               {loading && (
@@ -118,10 +120,10 @@ const Keys = () => {
         </form>
       </div>
 
-      <div className="rounded-lg shadow-2xl border border-gray-800 overflow-x-auto w-9/12 mb-6">
+      <div className="rounded-lg shadow-2xl overflow-x-auto w-9/12 mb-6">
         <table className="min-w-full" id="table_to_export">
           <>
-            <thead className="bg-slate-800 font-bold text-sm">
+            <thead className="bg-[#37517E] font-bold text-sm">
               <tr>
                 <th
                   scope="col"
@@ -152,18 +154,18 @@ const Keys = () => {
                 </th> */}
               </tr>
             </thead>
-            <tbody className="divide-y text-white divide-gray-800">
+            <tbody className=" text-white">
               {keys.map((key: any) => (
                 <tr key={key.id}>
-                  <td className="px-6 py-4 text-sm text-blue-100 hover:text-blue-200 cursor-pointer font-medium whitespace-nowrap">
+                  <td className="px-6 py-4 text-sm text-[#37517E] font-semibold cursor-pointer whitespace-nowrap">
                     {key.key}
                   </td>
-                  <td className="px-6 py-4 text-sm text-blue-100 hover:text-blue-200 cursor-pointer font-medium whitespace-nowrap">
+                  <td className="px-6 py-4 text-sm text-[#37517E] font-semibold cursor-pointer whitespace-nowrap">
                     {key.name}
                   </td>
                   <td className="px-6 py-4 text-sm whitespace-nowrap">
                     <button
-                      className="bg-orange-500 flex items-center justify-center hover:bg-orange-600 text-white font-bold py-2 px-4 rounded ml-4"
+                      className="bg-[#37517E] flex items-center justify-center hover:bg-[#243656] text-white font-bold py-2 px-4 rounded ml-4"
                       onClick={() => {
                         fetch("/api/create-api-key/" + key.id, {
                           method: "PUT",

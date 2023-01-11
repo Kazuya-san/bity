@@ -27,7 +27,7 @@ const Shortener: NextPage = () => {
       style={{
         fontFamily: "Montserrat",
       }}
-      className="flex items-center px-4 justify-center text-white flex-col w-full min-h-[85.6vh] bg-slate-900"
+      className="flex items-center px-4 justify-center text-white flex-col w-full min-h-[85.6vh] bg-[#37517E]"
     >
       <form
         onSubmit={(e) => {

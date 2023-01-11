@@ -17,6 +17,14 @@ const key = async (req: NextApiRequest, res: NextApiResponse) => {
     const page = req.query["page"] as string;
 
     if (session && session?.user?.isAdmin) {
+      if (page === "all") {
+        let data = await prisma.apiKey.findMany();
+        return res.json({
+          message: "success",
+          data,
+        });
+      }
+
       const data = await prisma.apiKey.findMany({
         //paginate
         skip: (parseInt(page) - 1) * limit,

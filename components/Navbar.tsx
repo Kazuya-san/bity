@@ -7,7 +7,7 @@ import Image from "next/image";
 
 const styles = {
   mainDiv:
-    "flex items-center min-h-[64px] justify-center px-3 md:px-10 p-3 text-white bg-slate-800",
+    "flex items-center min-h-[64px] justify-center px-3 md:px-10 p-3 text-white bg-[#37517E]",
   navUlStyles: "flex items-center justify-around",
   loginBtn:
     "bg-gray-700 hover:bg-gray-900 text-white font-semibold py-[5px] px-4 w-28 sm:w-32 rounded-lg transition",

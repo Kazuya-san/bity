@@ -51,7 +51,8 @@ const Dashboard = () =>
 
     const [loading, setLoading] = useState(false);
     const [urls, setUrls] = useState([]);
-
+    const [nameOptions, setnameOptions] = useState([]);
+    const [filterVal, setFilterVal] = useState("");
     // console.log(urls, count, pages);
 
     // if (status === "loading")
@@ -62,7 +63,17 @@ const Dashboard = () =>
     // console.log(data);
     const [originalUrl, setOriginalUrl] = useState("");
     const [pages, setPages] = useState(1);
+
+    const fetchdata = async (page: Number) => {
+      fetch("/api/create-api-key/key?page=all")
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.code === 404) return alert("No keys found");
+          setnameOptions(data.data);
+        });
+    };
     useEffect(() => {
+      setLoading(true);
       setOriginalUrl(window.location.origin);
       fetch(`/api/get-urls?page=${1}`, {
         method: "GET",
@@ -76,29 +87,89 @@ const Dashboard = () =>
         .then((data) => {
           setUrls(data.data);
           setPages(data.pages);
+          setLoading(false);
         });
+
+      fetchdata(1);
     }, []);
+
+    const onChange = (e) => {
+      setLoading(true);
+      setFilterVal(e.target.value);
+      fetch(`/api/get-urls?page=${1}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          name: e.target.value,
+        },
+
+        credentials: "include",
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setLoading(false);
+          setUrls(data.data);
+          setPages(data.pages);
+        });
+      console.log(e.target.value);
+    };
+
+    if (loading)
+      return (
+        <div
+          className="flex items-center justify-center p-3 text-white text-sm bg-white"
+          style={{
+            minHeight: "85.6vh",
+          }}
+        >
+          <div className="flex items-center justify-center ml-2">
+            <div className="flex justify-center items-center h-full">
+              <div className="animate-spin rounded-full h-24 w-24 border-t-2 border-b-2 border-gray-900"></div>
+            </div>
+          </div>
+        </div>
+      );
+
     return (
       <div
         style={{
           fontFamily: "Montserrat",
         }}
-        className="flex items-center justify-center text-white flex-col w-full min-h-[85.6vh] bg-slate-900"
+        className="flex items-center justify-center text-[#37517E] flex-col w-full min-h-[85.6vh] bg-white"
       >
         <h1 className="text-4xl mb-8 uppercase font-bold mt-8">Created Urls</h1>
 
-        <div className="my-4">
-          <Link href={"/keys"}>
-            <a className="bg-slate-800 hover:bg-slate-700 text-white font-bold py-2 px-4 rounded">
-              API Keys
-            </a>
-          </Link>
+        <div className="flex items-center justify-center">
+          <div className="my-4 mr-3">
+            <Link href={"/keys"}>
+              <a className="bg-[#37517E] hover:bg-slate-700 text-white font-bold py-2 px-4 rounded">
+                API Keys
+              </a>
+            </Link>
+          </div>
+
+          <div className="my-4">
+            <select
+              onChange={onChange}
+              value={filterVal}
+              className="bg-[#37517E] hover:bg-slate-700 text-white font-bold py-2 px-4 rounded"
+            >
+              <option value="all">All</option>
+              {nameOptions.map((name) => {
+                return (
+                  <option key={name.name} value={name.name}>
+                    {name.name}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
         </div>
 
-        <div className="rounded-lg shadow-2xl border border-gray-800 overflow-x-auto w-9/12 mb-6">
+        <div className="rounded-lg shadow-2xl overflow-x-auto w-9/12 mb-6">
           <table className="min-w-full" id="table_to_export">
             <>
-              <thead className="bg-slate-800 font-bold text-sm">
+              <thead className="bg-[#37517E] text-white font-bold text-sm">
                 <tr>
                   <th
                     scope="col"
@@ -118,6 +189,12 @@ const Dashboard = () =>
                   >
                     Clicks
                   </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 font-bold text-left uppercase"
+                  >
+                    Name
+                  </th>
                   {/* <th
                   scope="col"
                   className="px-6 py-3 font-bold text-left uppercase"
@@ -129,10 +206,10 @@ const Dashboard = () =>
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-y text-white divide-gray-800">
+              <tbody className=" text-white">
                 {urls.map((url: any) => (
                   <tr key={url.id}>
-                    <td className="px-6 py-4 text-sm text-blue-100 hover:text-blue-200 cursor-pointer font-medium whitespace-nowrap">
+                    <td className="px-6 py-4 text-sm text-[#37517E] cursor-pointer font-semibold whitespace-nowrap">
                       <Link href={url.url}>
                         <a target="_blank">
                           {url.url.length > 30
@@ -141,7 +218,7 @@ const Dashboard = () =>
                         </a>
                       </Link>
                     </td>
-                    <td className="px-6 py-4 text-sm text-blue-100 hover:text-blue-200 cursor-pointer font-medium whitespace-nowrap">
+                    <td className="px-6 py-4 text-sm text-[#37517E] cursor-pointer font-semibold whitespace-nowrap">
                       <Link href={`${originalUrl}/${url.slug}`}>
                         <a target="_blank">
                           {`${originalUrl}/${url.slug}`.length > 30
@@ -150,8 +227,11 @@ const Dashboard = () =>
                         </a>
                       </Link>
                     </td>
-                    <td className="px-6 py-4 text-sm whitespace-nowrap">
+                    <td className="px-6 py-4 text-[#37517E] font-semibold text-sm whitespace-nowrap">
                       {url.clicks}
+                    </td>
+                    <td className="px-6 py-4 text-sm text-[#37517E] font-semibold whitespace-nowrap">
+                      {url.userName ? url.userName : "Anonymous"}
                     </td>
                     {/* <td className="px-6 py-4 text-sm whitespace-nowrap">yes</td> */}
                     <td className="px-6 py-4 text-sm whitespace-nowrap">
