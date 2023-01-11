@@ -94,7 +94,7 @@ const Dashboard = () =>
     }, []);
 
     const onChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-      setLoading(true);
+      // setLoading(true);
       setFilterVal(e.target.value);
       fetch(`/api/get-urls?page=${1}`, {
         method: "GET",
@@ -107,11 +107,11 @@ const Dashboard = () =>
       })
         .then((res) => res.json())
         .then((data) => {
-          setLoading(false);
+          // setLoading(false);
           setUrls(data.data);
           setPages(data.pages);
         });
-      console.log(e.target.value);
+      // console.log(e.target.value);
     };
 
     if (loading)
