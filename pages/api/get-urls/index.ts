@@ -50,7 +50,7 @@ const url = async (req: NextApiRequest, res: NextApiResponse) => {
 
       const count = await prisma.url.count({
         where: {
-          userName: specific,
+          userName: specific as string,
         },
       });
 
