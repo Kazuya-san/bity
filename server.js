@@ -1,11 +1,9 @@
 const express = require("express");
 const next = require("next");
-const { PrismaClient } = require("@prisma/client");
 // import express from "express";
 // import next from "next";
 // import { PrismaClient } from "@prisma/client";
 
-const prisma = new PrismaClient();
 const port = process.env.PORT || 3000;
 const dev = process.env.NODE_ENV !== "production";
 const app = next({ dev });
