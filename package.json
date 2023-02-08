@@ -7,7 +7,7 @@
     "build": "npm install && prisma generate & next build",
     "start": "npm install && prisma generate & next start",
     "lint": "next lint",
-    "server": "prisma generate && node server.js"
+    "server": "node server.js"
   },
   "engines": {
     "node": "14.x"
