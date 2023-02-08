@@ -72,20 +72,27 @@ const Landing: NextPage = () => {
         </h1>
 
         <p className="font-light w-4/6 text-sm mb-5 text-center p-4 sm:p-0">
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tenetur vel,
-          porro quibusdam voluptate aut temporibus numquam debitis totam iure
-          perferendis obcaecati aliquam adipisci suscipit id at assumenda
-          ducimus sint aliquid vitae, explicabo quis. Dolore suscipit officia
-          vel quisquam explicabo, sunt fugiat omnis nostrum rerum, quidem harum
-          porro dolores reprehenderit repellat. Pariatur nesciunt, eveniet
-          officiis quia ex consequatur ducimus corrupti maxime, facere tenetur
-          sapiente natus vero, quasi deserunt! Officiis totam animi nisi,
-          possimus numquam vitae dolore corrupti perferendis vel provident.
-          Sapiente similique doloribus voluptatem qui aut. Soluta odio autem,
-          blanditiis dolores minus error laudantium doloribus, eius obcaecati
-          praesentium, possimus amet earum fugiat nulla sequi? Error hic
-          perspiciatis quam laborum ullam asperiores nulla, aut eligendi est
-          illum deleniti enim at? Optio, excepturi?
+          Our website, [website name], is the leading platform for URL
+          shortening services. Our goal is to make sharing links on the internet
+          as easy and convenient as possible. Our user-friendly interface allows
+          you to quickly and easily shorten any long or complicated URL into a
+          shorter, more manageable link. With our platform, you can create short
+          links for a variety of purposes, including sharing on social media,
+          messaging apps, email, and more. In addition to basic link shortening,
+          our website also offers advanced features such as link tracking and
+          analytics. This allows you to track clicks, views, and other metrics
+          on your shortened links, providing valuable insights into the
+          performance of your marketing campaigns. You can also customize your
+          links with your own branded domain, giving your business a
+          professional and polished look. Security is a top priority for us, and
+          we ensure that all links created on our platform are encrypted and
+          secure. We also offer a range of pricing plans to suit different
+          needs, from personal use to businesses. Our basic plan is free and
+          perfect for individuals and small business, while our premium plan
+          offers advanced features and support for larger businesses. If you are
+          looking for a reliable and user-friendly URL shortening service, look
+          no further than [website name]. Sign up now and start shortening your
+          links today.
         </p>
       </div>
 

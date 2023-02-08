@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import prisma from "../../../lib/prisma";
 import { getSession } from "next-auth/react";
-
+import { nanoid } from "nanoid";
 const url = async (req: NextApiRequest, res: NextApiResponse) => {
   //make the body json
 
@@ -87,9 +87,11 @@ const url = async (req: NextApiRequest, res: NextApiResponse) => {
 
   //get api key from the header
 
-  const { slug, url } = req.body;
+  const { url } = req.body;
 
-  const data = await prisma.url.findFirst({
+  let slug = nanoid(10);
+
+  let data = await prisma.url.findFirst({
     where: {
       slug: {
         equals: slug,
@@ -97,14 +99,25 @@ const url = async (req: NextApiRequest, res: NextApiResponse) => {
     },
   });
 
-  //   console.log(data);
-
-  if (data) {
-    res.statusCode = 404;
-    res.json({ code: 404, message: "slug already Exists" });
-
-    return;
+  while (data) {
+    slug = nanoid(10);
+    data = await prisma.url.findFirst({
+      where: {
+        slug: {
+          equals: slug,
+        },
+      },
+    });
   }
+
+  // //   console.log(data);
+
+  // if (data) {
+  //   res.statusCode = 404;
+  //   res.json({ code: 404, message: "slug already Exists" });
+
+  //   return;
+  // }
 
   if (session?.user?.isAdmin) {
     const newUrl = await prisma.url.create({
