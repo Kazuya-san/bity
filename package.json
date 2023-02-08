@@ -4,10 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "npm install & next build",
-    "start": "npm install & next start",
+    "build": "npm install & prisma generate & next build",
+    "start": "npm install & prisma generate & next start",
     "lint": "next lint",
-    "server": "node server.js"
+    "server": "prisma generate & node server.js"
   },
   "engines": {
     "node": "14.x"
