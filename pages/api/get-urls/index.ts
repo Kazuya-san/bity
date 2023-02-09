@@ -4,7 +4,7 @@ import { getSession } from "next-auth/react";
 
 const url = async (req: NextApiRequest, res: NextApiResponse) => {
   const page = (req.query["page"] as string) || "1";
-  const limit = 100;
+  const limit = parseInt(req.query["limit"] as string) || 1000;
 
   const key = req.headers["x-api-key"];
 

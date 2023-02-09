@@ -75,7 +75,7 @@ const Dashboard = () =>
     useEffect(() => {
       setLoading(true);
       setOriginalUrl(window.location.origin);
-      fetch(`/api/get-urls?page=${1}`, {
+      fetch(`/api/get-urls?page=${1}&limit=100`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
