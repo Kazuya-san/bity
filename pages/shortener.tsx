@@ -37,7 +37,8 @@ const Shortener: NextPage = () => {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-            },
+              "x-api-key": process.env.NEXT_PUBLIC_API_KEY,
+            } as any,
             body: JSON.stringify(form),
           })
             .then((res) => res.json())
@@ -47,7 +48,8 @@ const Shortener: NextPage = () => {
                 setError(data.message);
               } else {
                 setStatus("success");
-                setShortUrl(`${url}/${form.slug}`);
+                // setShortUrl(`${url}/${form.slug}`);
+                setShortUrl(data.data.shortUrl);
 
                 setForm({
                   slug: "",
@@ -66,7 +68,7 @@ const Shortener: NextPage = () => {
         className="flex flex-col justify-center w-full mx-4 md:w-1/2 mb-8"
       >
         <div className="flex items-center flex-col md:flex-row">
-          <div className="flex items-center justify-center w-full">
+          {/* <div className="flex items-center justify-center w-full">
             <span className="font-medium mr-2">{url}/</span>
             <input
               type="text"
@@ -84,8 +86,8 @@ const Shortener: NextPage = () => {
               required
               className="text-black my-1 p-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-pink-500 focus:ring-pink-500 block w-full rounded-md sm:text-sm focus:ring-1"
             />
-          </div>
-          <input
+          </div> */}
+          {/* <input
             type="button"
             value="Random"
             className="rounded my-2 bg-orange-600 hover:bg-orange-700 text-white py-1.5 px-3 font-bold cursor-pointer ml-2"
@@ -99,7 +101,7 @@ const Shortener: NextPage = () => {
               setStatus("idle");
               setError("");
             }}
-          />
+          /> */}
         </div>
         {status === "error" && (
           <p className="mt-1 text-xs text-red-500 text-center my-2">{error}</p>

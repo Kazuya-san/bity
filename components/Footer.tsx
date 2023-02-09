@@ -16,7 +16,7 @@ const Footer: NextPage = () => {
         fontFamily: "Montserrat",
       }}
     >
-      Copyright &copy; {new Date().getFullYear()} Bitty Url Shortener
+      Copyright &copy; {new Date().getFullYear()} Dynato Url Shortener
     </div>
   );
 };

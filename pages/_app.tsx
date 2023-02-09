@@ -10,7 +10,7 @@ import Footer from "../components/Footer";
 function MyApp({ Component, pageProps }: AppProps<{ session: Session }>) {
   const router: NextRouter = useRouter();
 
-  const authRoutes = ["/dashboard", "/create-profile"];
+  const authRoutes = ["/dashboard", "/create-profile", "/keys"];
 
   return (
     <SessionProvider session={pageProps.session}>

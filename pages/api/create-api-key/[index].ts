@@ -51,7 +51,7 @@ const key = async (req: NextApiRequest, res: NextApiResponse) => {
 
       const data = await prisma.apiKey.delete({
         where: {
-          id: index as string,
+          id: parseInt(index as string),
         },
       });
 
@@ -71,7 +71,7 @@ const key = async (req: NextApiRequest, res: NextApiResponse) => {
 
       const data = await prisma.apiKey.update({
         where: {
-          id: index as string,
+          id: parseInt(index as string),
         },
         data: {
           valid: req.body.valid === true ? true : false,

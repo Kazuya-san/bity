@@ -2,7 +2,7 @@ import { NextPage } from "next";
 import React from "react";
 import Link from "next/link";
 import { useSession, signOut, signIn } from "next-auth/react";
-
+import logo from "../public/logo2.png";
 import Image from "next/image";
 
 const styles = {
@@ -27,7 +27,7 @@ const Navbar: NextPage = () => {
         <div className="flex items-center justify-center">
           <Link as={`/dashboard`} href="/dashboard">
             <a className="md:text-base text-sm font-semibold ml-2">
-              <div className="flex flex-col md:flex-row items-center justify-center">
+              <div className="flex flex-col md:flex-row items-center justify-center w-full">
                 <Image
                   src={data?.user?.image as any}
                   alt="Picture of the author"
@@ -80,7 +80,15 @@ const Navbar: NextPage = () => {
     >
       <div className="flex-1 text-xl md:text-3xl font-bold">
         <Link href="/">
-          <a>Url Shortener</a>
+          <a className="flex items-center">
+            <Image
+              src={logo}
+              alt="Picture of the author"
+              width={40}
+              height={40}
+            />
+            Dynato
+          </a>
         </Link>
       </div>
       <nav className="flex-1 hidden md:block">

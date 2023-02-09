@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import prisma from "../../../lib/prisma";
 import { getSession } from "next-auth/react";
-
+import { nanoid } from "nanoid";
 const url = async (req: NextApiRequest, res: NextApiResponse) => {
   //make the body json
 
@@ -51,23 +51,34 @@ const url = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "DELETE") {
     const { index } = req.query;
 
-    const findData = await prisma.url.findFirst({
-      where: {
-        id: index as string,
-        userName: apiKey?.name,
-      },
-    });
+    let findData;
+
+    if (session?.user?.isAdmin) {
+      findData = await prisma.url.findFirst({
+        where: {
+          id: parseInt(index as string),
+        },
+      });
+    } else {
+      findData = await prisma.url.findFirst({
+        where: {
+          id: parseInt(index as string),
+          userName: apiKey?.name,
+        },
+      });
+    }
 
     // console.log(findData);
 
-    if (!findData || (!!session && !!session?.user?.isAdmin)) {
+    if (!findData || (!!session && !session?.user?.isAdmin)) {
+      console.log("here");
       res.statusCode = 404;
       return res.json({ code: 404, message: "not authorized or not found" });
     }
 
     const data = await prisma.url.delete({
       where: {
-        id: index as string,
+        id: parseInt(index as string),
       },
     });
 
@@ -87,9 +98,11 @@ const url = async (req: NextApiRequest, res: NextApiResponse) => {
 
   //get api key from the header
 
-  const { slug, url } = req.body;
+  const { url } = req.body;
 
-  const data = await prisma.url.findFirst({
+  let slug = nanoid(10);
+
+  let data = await prisma.url.findFirst({
     where: {
       slug: {
         equals: slug,
@@ -97,21 +110,33 @@ const url = async (req: NextApiRequest, res: NextApiResponse) => {
     },
   });
 
-  //   console.log(data);
-
-  if (data) {
-    res.statusCode = 404;
-    res.json({ code: 404, message: "slug already Exists" });
-
-    return;
+  while (data) {
+    slug = nanoid(10);
+    data = await prisma.url.findFirst({
+      where: {
+        slug: {
+          equals: slug,
+        },
+      },
+    });
   }
+
+  // //   console.log(data);
+
+  // if (data) {
+  //   res.statusCode = 404;
+  //   res.json({ code: 404, message: "slug already Exists" });
+
+  //   return;
+  // }
 
   if (session?.user?.isAdmin) {
     const newUrl = await prisma.url.create({
       data: {
         slug: slug,
         url: url,
-        fullUrl: process.env.CLIENT_URL + slug,
+        shortUrl: process.env.CLIENT_URL + slug,
+        userName: session?.user?.name,
         user: {
           connect: {
             id: session?.user?.id ?? "",
@@ -130,7 +155,7 @@ const url = async (req: NextApiRequest, res: NextApiResponse) => {
       data: {
         slug: slug,
         url: url,
-        fullUrl: process.env.CLIENT_URL + slug,
+        shortUrl: process.env.CLIENT_URL + slug,
         userName: apiKey?.name,
       },
     });

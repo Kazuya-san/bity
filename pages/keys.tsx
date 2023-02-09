@@ -49,7 +49,7 @@ const Keys = () => {
     fetch("/api/create-api-key/key?page=" + page)
       .then((res) => res.json())
       .then((data) => {
-        if (data.code === 404) return alert("No keys found");
+        if (data.code === 404) return;
         setKeys(data.data);
         setPages(data.pages);
       });
@@ -155,7 +155,7 @@ const Keys = () => {
               </tr>
             </thead>
             <tbody className=" text-white">
-              {keys.map((key: any) => (
+              {keys?.map((key: any) => (
                 <tr key={key.id}>
                   <td className="px-6 py-4 text-sm text-[#37517E] font-semibold cursor-pointer whitespace-nowrap">
                     {key.key}

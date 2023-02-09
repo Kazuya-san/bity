@@ -68,7 +68,7 @@ const Dashboard = () =>
       fetch("/api/create-api-key/key?page=all")
         .then((res) => res.json())
         .then((data) => {
-          if (data.code === 404) return alert("No keys found");
+          if (data.code === 404) return;
           setnameOptions(data.data);
         });
     };
@@ -207,7 +207,7 @@ const Dashboard = () =>
                 </tr>
               </thead>
               <tbody className=" text-white">
-                {urls.map((url: any) => (
+                {urls?.map((url: any) => (
                   <tr key={url.id}>
                     <td className="px-6 py-4 text-sm text-[#37517E] cursor-pointer font-semibold whitespace-nowrap">
                       <Link href={url.url}>
@@ -244,7 +244,7 @@ const Dashboard = () =>
           </table>
         </div>
 
-        {urls.length > 0 && (
+        {urls?.length > 0 && (
           <div className="flex items-center justify-center mt-4 mb-4">
             <ReactPaginate
               previousLabel={"Previous"}

@@ -3,14 +3,18 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 
 const ProtectedRoutes = ({ children }: { children: React.ReactNode }) => {
-  const { status } = useSession();
+  const { status, data } = useSession();
   const router = useRouter();
 
   useEffect(() => {
     if (status === "unauthenticated") {
-      router.push("/login");
+      router.push("/");
     }
-  }, [router, status]);
+
+    if (status === "authenticated" && !data.user?.isAdmin) {
+      router.push("/");
+    }
+  }, [router, status, data?.user?.isAdmin]);
 
   if (status === "unauthenticated") return null;
 
