@@ -10,8 +10,6 @@ const url = async (req: NextApiRequest, res: NextApiResponse) => {
 
   const session = await getSession({ req });
 
-  //if there is no api key and the user is not an admin
-
   if (!session?.user?.isAdmin && !key) {
     res.statusCode = 404;
     return res.json({

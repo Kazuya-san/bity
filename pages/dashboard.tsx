@@ -255,7 +255,7 @@ const Dashboard = () =>
               marginPagesDisplayed={2}
               pageRangeDisplayed={5}
               onPageChange={(data) => {
-                fetch(`/api/get-urls?page=${data.selected + 1}`, {
+                fetch(`/api/get-urls?page=${data.selected + 1}&limit=100`, {
                   method: "GET",
                   headers: {
                     "Content-Type": "application/json",

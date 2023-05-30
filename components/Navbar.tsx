@@ -1,5 +1,4 @@
 import { NextPage } from "next";
-import React from "react";
 import Link from "next/link";
 import { useSession, signOut, signIn } from "next-auth/react";
 import logo from "../public/logo2.png";
