@@ -67,15 +67,14 @@ model VerificationToken {
 }
 
 model Url {
-  id        Int      @id @default(autoincrement())
-  slug      String   @unique
-  url       String   @db.Text
-  clicks    Int      @default(0)
-  user      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    String?
-  userName  String?  @db.Text
-  shortUrl  String?  @db.Text
-  createdAt DateTime @default(now())
+  id       Int     @id @default(autoincrement())
+  slug     String  @unique
+  url      String  @db.Text
+  clicks   Int     @default(0)
+  user     User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId   String?
+  userName String? @db.Text
+  shortUrl String? @db.Text
 
   @@index([userId], name: "userId")
 }
